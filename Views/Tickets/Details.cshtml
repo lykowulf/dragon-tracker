@@ -1,0 +1,260 @@
+﻿@model TestTracker2020.Models.Ticket
+@using TestTracker2020.Services
+@inject IBTFileService BTFileService
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+    <div class="row ml-2">
+        <div class="col-12">
+            <div class="row layout-top-spacing">
+                <div>
+                    <div>
+                        <div class=" widget-content-area">
+                            <div class="row justify-content-center">
+                                <div class="col-3">
+                                    <h4> Details</h4>
+                                </div>
+                                <div class="col-3">
+
+                                </div>
+                                <div class="col-3">
+
+                                </div>
+                                <div class="col-3 ">
+                                    <a class="btn btn-outline-light" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                    <a class="btn btn-light" asp-action="Index">Back to Tickets</a>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class=" col-12 mx-auto">                                                                 
+                                    <dl class="row">
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.Title)</h3> 
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5> @Html.DisplayFor(model => model.Title)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.Description)</h3> 
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.Description)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3> @Html.DisplayNameFor(model => model.Created)</h3>
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5> @Html.DisplayFor(model => model.Created)</h5>
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.Updated)</h3>
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5> @Html.DisplayFor(model => model.Updated)</h5>
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.Project)</h3>
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.Project.Name)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.TicketType)</h3> 
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.TicketType.Name)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.TicketPriority)</h3> 
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.TicketPriority.Name)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.TicketStatus)</h3> 
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.TicketStatus.Name)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.OwnerUser)</h3> 
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.OwnerUser.FullName)</h5> 
+                                        </dd>
+                                        <dt class="col-sm-2">
+                                            <h3>@Html.DisplayNameFor(model => model.DeveloperUser)</h3>
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <h5>@Html.DisplayFor(model => model.DeveloperUser.FullName)</h5> 
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div id="basic" class="col layout-spacing mt-5">
+                <div class="widget-content-area ">
+                    <div class="row clearfix" enctype="multipart/form-data" method="post">
+                        @foreach (TicketAttachment item in Model.Attachments)
+                        {
+                            <div class="col-sm-4">
+                                <div class="">
+                                    <div class="file">
+                                        <a asp-controller="TicketAttachments" asp-action="DownloadFile" asp-route-id="@item.Id" target="_blank">
+
+                                            <div class="icon">
+                                                <img src="@BTFileService.GetFileIcon(item.FileName)" style="height:60px;width:60px" />
+                                            </div>
+                                            <div class="">
+                                                <p class="m-b-5 text-muted">@System.IO.Path.GetFileNameWithoutExtension(item.FileName)</p>
+                                                <small>Size: @BTFileService.FormatFileSize(item.FileData.Length) <span class="date text-muted">@item.Created.ToString("MMM dd, yyyy")</span></small>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <br />
+                    </div>
+                    <div>
+                        <form asp-action="Create" asp-controller="TicketAttachments" enctype="multipart/form-data" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="@Model.Id" name="TicketId" />
+                            <div class="media-body ">
+                                <br />
+                                    <label class="btn btn-light ">
+                                        <input asp-for="@Model.Attachments.FirstOrDefault().FormFile" type="file" />
+                                    </label>
+                                <button type="submit" class="btn btn-light">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 mt-5">
+            <div id="basic" class="">
+                <div class="widget-content-area ">
+                    <h2>Comments</h2>
+                    <dl>
+                        <dd class="col-sm-10">
+                            @foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+                            {
+                                @comment.Created.ToString("MMM dd H:mm")
+
+                                <span>:</span>
+                                @comment.User?.FullName
+                                <span>:</span>
+                                @comment.Comment
+                                <br />
+                            }
+                        </dd>
+                    </dl>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form asp-controller="TicketComments" asp-action="Create">
+                                <div asp-validation-summary="ModelOnly" class="btn btn-dark"></div>
+                                @Html.Hidden("TicketId", Model.Id)
+                                <div class="form-group" >
+                                    <input id="editor-container" name="Comment" class="form-control ">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-light" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*histories table*@
+    <div class="col  layout-spacing">
+        <div class="widget-content-area ">
+            <div class="table-responsive ">
+                <table id="zero-config" class="table table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Property
+                            </th>
+                            <th>
+                                Old value
+                            </th>
+                            <th>
+                                New Value
+                            </th>
+                            <th>
+                                Created On
+                            </th>
+                            <th>
+                                Ticket Name
+                            </th>
+                            <th>
+                                User
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Histories)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Property)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OldValue)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NewValue)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Created)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ticket.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.FullName)
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Template/plugins/table/datatable/datatables.js"></script>
+    <script>
+        $('#zero-config').DataTable({
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7
+        });</script>
+}

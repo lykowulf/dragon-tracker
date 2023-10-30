@@ -1,0 +1,73 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+@{
+    Layout = null;
+}
+
+<link href="~/Template/assets/css/loader.css" rel="stylesheet" type="text/css" />
+<script src="~/Template/assets/js/loader.js"></script>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+<link href="~/Template/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="~/Template/assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="~/Template/bootstrap/js/popper.min.js"></script>
+    <script src="~/Template/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Template/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Template/assets/js/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script src="~/Template/assets/js/custom.js"></script>
+
+}

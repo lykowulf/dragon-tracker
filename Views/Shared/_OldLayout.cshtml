@@ -1,0 +1,195 @@
+﻿<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+    @*this is what was in my project originally*@
+    <title>Dragon Tracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    @*template style*@
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/loader.css" rel="stylesheet" />
+    @*<link href="~/css/dash_2.css" rel="stylesheet" />*@
+    <script src="~/js/loader.js"></script>
+
+    @*Login styles*@
+@*<link href="~/css/form-1.css" rel="stylesheet" />*@
+
+
+   
+</head>
+<body class="alt-menu sidebar-noneoverflow">-->
+    <!-- BEGIN LOADER -->
+    <!--<div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>-->
+    <!--End Loader-->
+
+    <!--<header class="header navbar navbar-expand-sm expand-header container-fluid">
+        <nav @*class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"*@>
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Dragon Tracker</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <div class="text-color">
+
+                    <partial name="_LoginPartial"/>
+                    </div>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item text">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item text">
+                            <a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="Index">Tickets</a>
+                        </li>
+                        <li class="nav-item text">
+                            <a class="nav-link" asp-area"" asp-controller="Projects" asp-action="Index">Projects</a>
+                        </li>
+                        <li class="nav-item text">
+                            <a class="nav-link" asp-area"" asp-controller="Projects" asp-action="MyProjects">My Projects</a>
+                        </li>
+                        <li class="nav-item text">
+                            <a class="nav-link" asp-area"" asp-controller="Tickets" asp-action="MyTickets">My Tickets</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    @*Main Container*@
+    <div class="main-container sidebar-closed sbar-open" id="container">
+        <div class="overlay"></div>
+        <div class="cs-overlay"></div>
+        <div class="search-overlay"></div>
+    </div>
+
+    <div id="content" class="main-content">
+        <div class="layout-px-spacing">
+
+            <div class="row layout-top-spacing">
+
+                
+
+                
+
+                
+
+                
+
+                
+                
+                
+               
+
+               
+                
+                    </div>
+                </div>
+
+            </div>
+
+     
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+        @*<form method="post">
+                <textarea id="mytextarea">Hello, World!</textarea>
+            </form>*@
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text">
+            &copy; 2020 - Dragon Tracker<a asp-area="" asp-controller="Home" asp-action="Privacy"></a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/y2txex64qdxsht3xnqo1ipz8q0pkt81by6f04q67pi2scllo/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+
+
+
+    @*Template scripts*@
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/jquery-3.1.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/perfect-scrollbar.min.js"></script>
+    <script src="~/js/app.js"></script>
+    @*<script src="~/js/dash_2.js"></script>*@
+    @*<script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>*@
+    <script src="~/js/custom.js"></script>
+
+   @*Login Scripts*@
+@*<script src="~/js/form-1.js"></script>*@
+
+
+
+
+
+
+
+
+
+    <script>
+
+        $(document).ready(function ()
+        { $('.table').DataTable(); });
+        @*TinyMCE*@
+        tinymce.init({ selector: '#Body' });
+    </script>
+
+    @*<script>
+            tinymce.init({
+                selector: '#mytextarea'
+            });
+        </script>*@
+
+    @if (TempData["DemoLockout"] != null)
+    {
+        <script>
+            function alertFn() {
+                alert("@TempData["DemoLockout"]");//should be a suite alert
+            }
+        </script>
+    }
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>-->

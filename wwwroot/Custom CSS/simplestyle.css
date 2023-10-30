@@ -1,0 +1,44 @@
+﻿.card-body{
+    height: 300px;
+}
+
+/*Carousel*/
+#carousel{
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, .5);
+}
+
+.carousel-inner{
+    max-height: 50rem !important;
+}
+
+/* Carousel Transition Speed*/
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active{
+    transition: transform 1.2s ease;
+}
+
+/*Carousel Content*/
+.carousel-caption{
+    position: absolute;
+    top: 54%;
+    transform: translateY(-50%);
+    text-transform: uppercase;
+}
+
+.bg-custom{
+    background-color: rgba(105, 91, 91, 0.4);
+    color: orange;
+    border-radius: 1rem;
+}
+
+/*Fixed Background IMG*/
+.fixed{
+    background-image: url('/Images/tracker1.png');
+    position: fixed;
+}
+
+.fixed-background{
+    padding: 10rem 0;
+}
+

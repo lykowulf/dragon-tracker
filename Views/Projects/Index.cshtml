@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TestTracker2020.Services
+@model IEnumerable<TestTracker2020.Models.Project>
+@* access service gives own service*@
+@inject IBTAccessService AccessService
+@inject UserManager<BTUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    var userId = UserManager.GetUserId(User);
+    var roleName = (await UserManager.GetRolesAsync(await UserManager.GetUserAsync(User))).FirstOrDefault();
+
+}
+
+
+
+
+
+
+<div class="container">
+
+    <div class="">
+        <div class="row layout-top-spacing">
+            <div class="col-xl-12 col-lg-12 col-sm-12  ">
+                <div class=" widget-content-area  br-6">
+                    <h5 class="">All Projects</h5>
+
+
+                    @if (!User.IsInRole("Developer") && (!User.IsInRole("Submitter") && (!User.IsInRole("NewUser"))))
+                    {
+
+                        <p>
+                            <a asp-action="Create">Create New</a>
+                        </p>}
+
+                    <div class="table-responsive mb-4 mt-4">
+                        <table id="zero-config" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+
+                                        <td>
+                                            @if (await AccessService.CanInteractProject(userId, item.Id, roleName))
+                                            {
+
+                                                <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">Edit</a> <span></span>
+                                                <a class="btn btn-light" asp-action="Details" asp-route-id="@item.Id">Details</a> <span></span>
+
+                                            }
+                                            else if (!User.IsInRole("ProjectManager") && (!User.IsInRole("Admin")))
+                                            {
+
+                                                <a class="btn btn-light" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/Template/plugins/table/datatable/datatables.js"></script>
+    <script>
+        $('#zero-config').DataTable({
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7
+        });
+    </script>
+
+}

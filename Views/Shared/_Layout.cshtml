@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Dragon Tracker</title>
+    <link rel="icon" type="image/x-icon" href="~/Images/favicon-16x16.png" /favicon.ico" />
+
+    <link href="~/Template/assets/css/loader.css" rel="stylesheet" type="text/css" />
+    <script src="~/Template/assets/js/loader.js"></script>
+    <link href="~/Custom CSS/simplestyle.css" rel="stylesheet" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="~/Template/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <link href="~/Template/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link href="~/Template/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+
+
+    <link href="~/table/datatable/dt-global_style-light.css" rel="stylesheet" />
+    <link href="~/table/datatable/datatables-light.css" rel="stylesheet" />
+    <link href="~/css/quill.snow.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+</head>
+<body class="alt-menu sidebar-noneoverflow background">
+    <!-- BEGIN LOADER -->
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
+    <!--  END LOADER -->
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container sidebar-closed sbar-open" id="container">
+
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+
+        <!--  BEGIN SIDEBAR  -->
+        <div class="sidebar-wrapper sidebar-theme">
+            <nav id="sidebar">
+
+               
+
+                <ul class="list-unstyled menu-categories" id="accordionExample">
+
+
+                    @*DashBoard Nav*@
+                    <li class="menu menu-heading">
+                        <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>Dasboard</span></div>
+                    </li>
+                    <li class="menu">
+                        <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-area="" asp-controller="Home" asp-action="Index">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <span>Dasboard</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    @*Tickets Nav*@
+                    <li class="menu menu-heading">
+                        <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>Tickets</span></div>
+                    </li>
+                    @*Tickets*@
+                    <li class="menu">
+                        <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-controller="Tickets" asp-action="Index">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <span>Tickets</span>
+                            </div>
+                        </a>
+                    </li>
+                    @*My Tickets*@
+                    @if (!User.IsInRole("NewUser"))
+                    {
+
+                        <li class="menu">
+                            <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-controller="Tickets" asp-action="MyTickets">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <span>My Tickets</span>
+                                </div>
+                            </a>
+                        </li>
+                       
+                    }
+
+                    @*Projects Nav*@
+                    <li class="menu menu-heading">
+                        <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>Projects</span></div>
+                    </li>
+                    @*Projects*@
+                    <li class="menu">
+                        <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-controller="Projects" asp-action="Index">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <span>Projects</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    @*MyProjects*@
+                    @if (!User.IsInRole("NewUser"))
+                    {
+
+                        <li class="menu">
+                            <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-controller="Projects" asp-action="MyProjects">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <span>My Projects</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                    else if (!User.IsInRole("Submitter") && (!User.IsInRole("NewUser")))
+                    {
+
+                        <li class="menu">
+                            <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-controller="Projects" asp-action="Create">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <span>Create Projects</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
+
+
+
+
+
+
+                    @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager")))
+                    {
+                        @*ManageRoles Nav*@
+                        <li class="menu menu-heading">
+                            <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>Manage Roles</span></div>
+                        </li>
+                        <li class="menu">
+                            <a aria-expanded="false" class="dropdown-toggle nav-link" asp-area"" asp-controller="UserRoles" asp-action="ManageUserRoles">
+                                <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <span>User Roles</span>
+                                </div>
+                            </a>
+                        </li>
+
+
+
+                    }
+
+
+
+                    @*logout*@
+                    <li class="menu menu-heading">
+                        <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>  <partial name="_LoginPartial" /></span></div>
+                    </li>
+
+
+
+                </ul>
+
+
+
+            </nav>
+
+        </div>
+        @*END SIDEBAR*@
+
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+
+
+
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- END MAIN CONTAINER -->
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="~/js/jquery-3.1.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/perfect-scrollbar.min.js"></script>
+    <script src="~/Template/assets/js/app.js"></script>
+    @*<script>
+            $(document).ready(function () {
+                App.init();
+            });
+        </script>*@
+    <script src="~/js/custom.js"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="~/js/dash_2.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="~/table/datatable/datatables.js"></script>
+    <script src="~/js/quill.js"></script>
+
+
+
+
+
+    <script>
+        $(function () {
+            $('#zero-config').DataTable({
+                "oLanguage": {
+                    "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                    "sInfo": "Showing page _PAGE_ of _PAGES_",
+                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results :  _MENU_",
+                },
+                "stripeClasses": [],
+                "lengthMenu": [7, 10, 20, 50],
+                "pageLength": 7
+            });
+    </script>
+    <script>
+        //Step 1 - Construct the URL needed to request the data
+        var Url1 = '@Url.Action("TypeChart", "Charts")'; // represent the endpoint
+        var Url2 = '@Url.Action("PriorityChart", "Charts")'; // represent the endpoint
+        var Url3 = '@Url.Action("StatusChart", "Charts")'; // represent the endpoint
+
+        //Step 2 - start the structure for our AJAX call
+        $.post(Url1).then(function (response) {
+            // Get context with jQuery - using jQuery's .get() method.
+            var typeChartCanvas = $('#typeChart').get(0).getContext('2d')
+            var donutData = {
+                labels: response.labels,
+                datasets: [
+                    {
+                        data: response.data,
+                        backgroundColor: response.backgroundColor,
+                    }
+                ]
+            }
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var donutChart = new Chart(typeChartCanvas, {
+                type: 'pie',
+                data: donutData,
+                options: donutOptions
+            })
+        });
+        $.post(Url2).then(function (response) {
+            // Get context with jQuery - using jQuery's .get() method.
+            var priorityChartCanvas = $('#priorityChart').get(0).getContext('2d')
+            var donutData = {
+                labels: response.labels,
+                datasets: [
+                    {
+                        data: response.data,
+                        backgroundColor: response.backgroundColor,
+                    }
+                ]
+            }
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var donutChart = new Chart(priorityChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+        });
+        $.post(Url3).then(function (response) {
+            // Get context with jQuery - using jQuery's .get() method.
+            var statusChartCanvas = $('#statusChart').get(0).getContext('2d')
+            var donutData = {
+                labels: response.labels,
+                datasets: [
+                    {
+                        data: response.data,
+                        backgroundColor: response.backgroundColor,
+                    }
+                ]
+            }
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var donutChart = new Chart(statusChartCanvas, {
+                type: 'pie',
+                data: donutData,
+                options: donutOptions
+            })
+        });
+    </script>
+
+    <script>
+        var quill = new Quill('#editor-container', {
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block']
+                ]
+            },
+            placeholder: 'Compose an epic...',
+            theme: 'snow'
+        });
+    </script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

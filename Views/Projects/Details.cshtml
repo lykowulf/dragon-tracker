@@ -1,0 +1,237 @@
+﻿@using TestTracker2020.Models
+@model TestTracker2020.Models.Project
+@using TestTracker2020.Services
+@using Microsoft.AspNetCore.Identity
+
+@inject IBTAccessService AccessService
+@inject UserManager<BTUser> UserManager
+
+@{
+    ViewData["Title"] = "Details";
+    var userId = UserManager.GetUserId(User);
+    var roleName = (await UserManager.GetRolesAsync(await UserManager.GetUserAsync(User))).FirstOrDefault();
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 mt-5 br-6">
+            <div class="widget-content-area">
+                <div class="row justify-content-center">
+
+                    <h1>
+                        @Html.DisplayNameFor(model => model.Name):
+                    </h1>
+                </div>
+                <br />
+
+                <div class="row justify-content-center">
+                    <h2>
+                        @Html.DisplayFor(model => model.Name)
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 mt-5">
+            <div class=" widget-content-area">
+                <div class="row justify-content-center">
+                    <h2>Assigned Team Members:</h2>
+
+                    <br />
+
+
+                    <div class="row">
+
+
+                        @foreach (var user in Model.ProjectUsers)
+                        {
+
+
+
+                            <h5> @user.User.FullName, </h5>
+
+
+                        }
+
+                    </div>
+
+
+
+                    @if (!User.IsInRole("Submitter") && (!User.IsInRole("Developer") && (!User.IsInRole("NewUser"))))
+                    {
+
+
+                        <a class="btn btn-light" asp-action="AssignUsers" asp-route-id="@Model.Id">Assign Members</a>
+                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+
+                    }
+                    <a class="btn btn-light" asp-action="Index">Back to Projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="col-xl-12 col-lg-12 col-sm-12 mt-5 layout-spacing">
+        <div class=" widget-content-area br-6">
+
+            <div class="mb">
+                <div class="row ">
+                    <div class="table-responsive ">
+                        <table id="zero-config" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                        <th>
+                                           Title
+                                        </th>
+                                        <th>
+                                           Description
+                                        </th>
+                                        <th>
+                                            Created
+                                        </th>
+                                        <th>
+                                           Updated
+                                        </th>
+                                        <th>
+                                          Project
+                                        </th>
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                        Priority
+                                        </th>
+                                        <th>
+                                         Status
+                                        </th>
+                                        <th>
+                                           Submitter
+                                        </th>
+                                        <th>
+                                           Developer
+                                        </th>
+                                        <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Tickets)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Created)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Updated)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Project.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TicketType.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
+                                        </td>
+                                        <td>
+                                            @if (await AccessService.CanInteractTicket(userId, item.Id, roleName))
+                                            {
+
+
+                                                <a class="btn btn-light" asp-action="Details" asp-route-id="@item.Id">Details</a>}
+
+                                            @if (User.IsInRole("ProjectManager") && (User.IsInRole("Admin")))
+                                            {
+                                                <a class="btn btn-light" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                                <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">Edit</a><br /><br />
+                                            }
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/Template/plugins/table/datatable/datatables.js"></script>
+    <script>
+        $('#zero-config').DataTable({
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+                "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
